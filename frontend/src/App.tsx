@@ -17,11 +17,7 @@ async function fetchRecipes(): Promise<string> {
 */
 
 function App() {
-  const {
-    data: recipes,
-    isLoading,
-    error,
-  } = useQuery<string, Error>({
+  const { data: recipes, error } = useQuery<string, Error>({
     queryKey: ["posts"],
     queryFn: async (): Promise<string> => {
       const response = await fetch("/api/recipes");
