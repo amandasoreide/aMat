@@ -1,8 +1,35 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import { useQuery } from "@tanstack/react-query";
+
+/*
+async function fetchRecipes(): Promise<string> {
+  const res = await fetch("/api/recipes", {
+    headers: { Accept: "application/json" },
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Failed to fetch recipes: ${res.status} ${text}`);
+  }
+  return res.json();
+}
+*/
 
 function App() {
+  const {
+    data: recipes,
+    isLoading,
+    error,
+  } = useQuery<string, Error>({
+    queryKey: ["posts"],
+    queryFn: async (): Promise<string> => {
+      const response = await fetch("/api/recipes");
+      return await response.json();
+    },
+    retry: false, // do not retry on error
+  });
+
   return (
     <div className="App">
       <header className="App-header">
@@ -16,6 +43,8 @@ function App() {
         >
           Learn React
         </a>
+        <p>{recipes}</p>
+        <p>{error?.message}</p>
       </header>
     </div>
   );
