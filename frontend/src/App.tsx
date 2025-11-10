@@ -18,9 +18,9 @@ async function fetchRecipes(): Promise<string> {
 
 function App() {
   const { data: recipes, error } = useQuery<string, Error>({
-    queryKey: ["posts"],
+    queryKey: ["recipes"],
     queryFn: async (): Promise<string> => {
-      const response = await fetch("/api/recipes");
+      const response = await fetch("/api/HttpRecipes");
       return await response.json();
     },
     retry: false, // do not retry on error
