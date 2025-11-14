@@ -2,6 +2,7 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { useQuery } from "@tanstack/react-query";
+import { Recipe } from "./models/Recipe";
 
 /*
 async function fetchRecipes(): Promise<string> {
@@ -17,9 +18,9 @@ async function fetchRecipes(): Promise<string> {
 */
 
 function App() {
-  const { data: recipes, error } = useQuery<string, Error>({
+  const { data: recipes, error } = useQuery<Recipe[], Error>({
     queryKey: ["recipes"],
-    queryFn: async (): Promise<string> => {
+    queryFn: async (): Promise<Recipe[]> => {
       const response = await fetch("/api/HttpRecipes");
       return await response.json();
     },
@@ -39,7 +40,7 @@ function App() {
         >
           Learn React
         </a>
-        <p>{recipes}</p>
+        <p>{recipes?.map((recipe) => recipe.title).join(", ")}</p>
         <p>{error?.message}</p>
       </header>
     </div>

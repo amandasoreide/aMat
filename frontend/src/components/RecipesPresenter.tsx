@@ -1,9 +1,4 @@
-type Recipe = {
-  id: string;
-  title: string;
-  description?: string;
-  // add fields that match your function response
-};
+import { Recipe } from "../models/Recipe";
 
 async function fetchRecipes(): Promise<Recipe[]> {
   const res = await fetch("/api/recipes", {
